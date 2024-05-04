@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Eventos
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<main>
+
+<section class="w-full max-w-5xl mx-auto py-8 px-4 md:px-6">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold">Eventos</h1>
+      <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3" id= "open">
+        <i class="ri-add-circle-line"></i> Crear Evento
+      </button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+     
+        {% for evento in eventos %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
+            <a href="./evento/{{evento.nombre}}">
+              <img
+                src="https://img.freepik.com/foto-gratis/personas-que-participan-evento-alto-protocolo_23-2150951435.jpg?t=st=1714255904~exp=1714259504~hmac=bac76925ea021a42cef9468df5de9663d0aabd65f888331db88be055843ecd8e&w=740"
+                alt="Evento 6"
+                width="400"
+                height="250"
+                class="w-full h-48 object-cover"
+                style="aspect-ratio: 400 / 250; object-fit: cover;"
+              />
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">{{evento.nombre}}</h3>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+
+    
+
+
+
+      
+    </div>
+  </section>
+    
+    
+  <dialog id="modal" class="modal">
+    <form method="post">
+      <h1>Registro de Alumno</h1>
+      <!-- Formulario de registro de alumno -->
+      {% csrf_token %}
+      <div>
+        <label for="nombreCompleto">Nombre del evento</label>
+        <input type="text" placeholder="Nombre Completo" name="nombre" id="nombreCompleto" required>
+      </div>
+      <div>
+        <label for="apellido">Fecha</label>
+        <input type="date" placeholder="Nombre Completo" name="fecha" required>
+      </div>
+      
+      <menu>
+        <button class = "cerrarmodal" id="close" type="reset">Cerrar</button>
+        <button class = "abrirmodal" type="submit">Guardar</button>
+      </menu>
+    </form>
+  </dialog>
+     
+     
+    </main>
+          
+          
+{% endblock %}
+
+

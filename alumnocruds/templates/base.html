@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.4.0/remixicon.css" crossorigin="">
+      {% load static %}
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+      <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+
+      <script src="https://cdn.tailwindcss.com"></script>
+      
+      <!--=============== JS===============-->
+      <script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.1/dist/showdown.min.js"></script>
+     
+
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/x-icon">
+      <!-- jQuery -->
+   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+   <!-- DataTables JS -->
+   <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+
+   <!-- DataTables CSS -->
+   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css" />
+   
+   <!-- tailwind CSS -->
+   <script src="https://cdn.tailwindcss.com"></script>
+   <!-- Sweetalert -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <!-- html5-qrcode -->
+   <script src="https://unpkg.com/html5-qrcode"></script>
+   </head>
+   <body>
+      <!-- Sidebar bg -->
+      <!-- <img src="assets/img/sidebar-bg.jpg" alt="sidebar img" class="bg-image"> -->
+
+      <!--=============== HEADER ===============-->
+      {% include 'components/header.html' %}
+
+      <!--=============== SIDEBAR ===============-->
+      {% include 'components/sidebar.html' %}
+
+      <!--=============== MAIN ===============-->
+      
+      <main class="main container" id="main">
+         {% block content %}
+         
+         {% endblock %}
+      </main>
+      
+     
+
+   </body>
+   <script src="{% static 'js/main.js' %}"></script>
+   <script src="{% static 'js/qrScanner.js' %}"></script>
+   <script>
+      function redirigir(url) {
+         // Cambia la URL a la que quieres redirigir
+         console.log(url);
+         window.location.href = url;
+     }
+   </script>
+</html>

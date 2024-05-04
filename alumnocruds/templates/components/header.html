@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<header class="header">
+    <div class="header__container container">
+       <div class="header__toggle" id="header-toggle">
+          <i class="ri-menu-line"></i>
+       </div>
+       {% load static %}
+       <a href="#" class="header__logo">
+          {% comment %} <img src="{% static 'img/roboctopus-round.png' %}" alt=""> {% endcomment %}
+       </a>
+    </div>
+ </header>

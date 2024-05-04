@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+{% load static %}
+    <main>
+
+        <div class="button-container">
+          <button id="open"><i class="ri-add-circle-line"></i> Registrar Alumno</button>
+          <button id="openedit"><i class="ri-pass-valid-line"></i> Registrar Asistencia</button>
+        </div>
+        <table id="" class="display table-auto bg-white rounded-lg shadow-md overflow-hidden" style="width:40%">
+            <thead class="bg-blue-500 text-white">
+                <tr>
+                  <th class="px-4 py-2">Codigo</th>
+                  <th class="px-4 py-2">Nombre completo</th>
+                  <th class="px-4 py-2">Cedula(RG)</th>
+                  <th class="px-4 py-2">Semestre</th>
+                  <th class="px-4 py-2">Asistencia dia 1</th>
+                  <th class="px-4 py-2">Asistencia dia 2</th>
+                  <th class="px-4 py-2">NUDO Y SUTURA</th>
+                  <th class="px-4 py-2">HEMORRAGIA Y FRACTURA</th>
+                  <th class="px-4 py-2">INTUBACION OROTRAQUEAL</th>
+                  <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alumno in alumnos %}
+                    <tr>
+                        <td class="border px-4 py-2">{{alumno.codigo}}</td>
+                        <td class="border px-4 py-2">{{alumno.nombreCompleto}}</td>
+                        <td class="border px-4 py-2">{{alumno.cedula}}</td>
+                        <td class="border px-4 py-2">{{alumno.semestre}}</td>
+                        <td class="border px-4 py-2">
+                              {% if alumno.dia_uno %}
+                                  Entrada:{{alumno.dia_uno|date:"H:i"}}
+                                  <br>
+                                  {% if alumno.salida_dia_uno %}
+                                      Salida:{{alumno.salida_dia_uno|date:"H:i"}}
+                                  {% else %}
+                                      Aun no ha salido
+                                  {% endif %}
+                              {% else %}
+                                  Aun no ha llegado
+                              {% endif %}
+                          </td>
+                          <td class="border px-4 py-2">
+                              {% if alumno.dia_dos %}
+                                  Entrada:{{alumno.dia_dos|date:"H:i"}}
+                                  <br>
+                                  {% if alumno.salida_dia_dos %}
+                                      Salida:{{alumno.salida_dia_dos|date:"H:i"}}
+                                  {% else %}
+                                      Aun no ha salido
+                                  {% endif %}
+                              {% else %}
+                                  Aun no ha llegado
+                              {% endif %}
+                          </td>
+                      
+                          <td class="border px-4 py-2">
+                            {% if alumno.NUDO_Y_SUTURA %}
+                                {% if alumno.Asistencia_NUDO_Y_SUTURA %}
+                                    Entrada:{{alumno.Asistencia_NUDO_Y_SUTURA|date:"H:i"}}
+                                    <br>
+                                    Salida:{{alumno.salida_NUDO_Y_SUTURA|date:"H:i"}}
+                                {% else %}
+                                    Aun no llegó
+                                {% endif %}
+                            {% else %}
+                                No participa
+                            {% endif %}
+                          </td>
+                          
+                          <td class="border px-4 py-2">
+                            {% if alumno.HEMORRAGIA_Y_FRACTURA %}
+                                {% if alumno.Asistencia_HEMORRAGIA_Y_FRACTURA %}
+                                Entrada:{{alumno.Asistencia_HEMORRAGIA_Y_FRACTURA|date:"H:i"}}
+                                    <br>
+                                    Salida:{{alumno.salida_HEMORRAGIA_Y_FRACTURA|date:"H:i"}}
+                                {% else %}
+                                    Aun no llegó
+                                {% endif %}
+                            {% else %}
+                                No participa
+                            {% endif %}
+                        </td>
+                        <td class="border px-4 py-2">
+                            {% if alumno.INTUBACION_OROTRAQUEAL %}
+                                {% if alumno.Asistencia_INTUBACION_OROTRAQUEAL %}
+                                Entrada:{{alumno.Asistencia_INTUBACION_OROTRAQUEAL|date:"H:i"}}
+                                    <br>
+                                    Salida:{{alumno.salida_INTUBACION_OROTRAQUEAL|date:"H:i"}}
+                                {% else %}
+                                    Aun no llegó
+                                {% endif %}
+                            {% else %}
+                                No participa
+                            {% endif %}
+                        </td>
+                        
+                        <td class="border px-4 py-2"><button id="deleteButton" data-cedula="{{alumno.codigo}}" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
+                              <path d="M3 6h18"></path>
+                              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                          </svg>
+                          Eliminar
+                      </button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot class="bg-blue-500 text-white">
+              <tr>
+                <th class="px-4 py-2">Codigo</th>
+                <th class="px-4 py-2">Nombre completo</th>
+                <th class="px-4 py-2">Cedula(RG)</th>
+                <th class="px-4 py-2">Semestre</th>
+                <th class="px-4 py-2">Asistencia dia 1</th>
+                <th class="px-4 py-2">Asistencia dia 2</th>
+                <th class="px-4 py-2">NUDO Y SUTURA</th>
+                <th class="px-4 py-2">HEMORRAGIA Y FRACTURA</th>
+                <th class="px-4 py-2">INTUBACION OROTRAQUEAL</th>
+                <th class="px-4 py-2"></th>
+
+              </tr>
+          </tfoot>
+        </table>
+        
+    
+    
+    
+        <dialog id="modal" class="modal">
+          <div class="mx-auto max-w-2xl space-y-8 py-12 md:py-16">
+            <div class="space-y-2 text-center">
+              <h1 class="text-3xl font-bold">Información del Alumno</h1>
+              <p class="text-gray-500 dark:text-gray-400">
+                Por favor, complete los siguientes campos para registrar la información del alumno.
+              </p>
+            </div>
+            <form  id="crear" method="post">
+              {% csrf_token %}
+       
+              <input type="text" id="nombre" name="nombreCompleto" placeholder="Nombre Completo" required>
+
+              <input type="text" id="cedula" placeholder="Cedula" name="cedula" required>
+        
+          <div class="input-group">
+             
+              <input type="number" id="semestre"placeholder="Semestre" name="semestre" required>
+              
+              <input type="number" id="codigo" name="codigo" placeholder="Código" min="10001" max="10500" required>
+
+              
+          </div>
+          <!-- Aquí van los campos de texto con la clase input-group -->
+          <div class="checkbox-group">
+              <label for="NUDO_Y_SUTURA">NUDO Y SUTURA:</label>
+              <input type="checkbox" id="NUDO_Y_SUTURA" name="NUDO_Y_SUTURA">
+              
+          </div>
+          <div class="checkbox-group">
+              <label for="HEMORRAGIA_Y_FRACTURA">HEMORRAGIA Y FRACTURA:</label>
+              <input type="checkbox" id="HEMORRAGIA_Y_FRACTURA" name="HEMORRAGIA_Y_FRACTURA">
+            
+          </div>
+          <div class="checkbox-group">
+              <label for="INTUBACION_OROTRAQUEAL">INTUBACION OROTRAQUEAL:</label>
+              <input type="checkbox" id="INTUBACION_OROTRAQUEAL" name="INTUBACION_OROTRAQUEAL">
+             
+          </div><br>
+          <div class="flex justify-end">
+            <input type="submit" class="bg-green-500 text-white hover:bg-green-700 w-32 mr-2" value="Enviar">
+            <button id="close" class="bg-red-500 text-white hover:bg-red-700 w-32">Cerrar</button>
+        </div>
+      </form>
+          </div>
+          </dialog>
+     
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <dialog id="editarAlumno" class="modal">
+            <div class="mx-auto max-w-2xl space-y-8 py-12 md:py-16">
+              
+              <div class="mx-auto max-w-2xl space-y-8 py-12 md:py-16">
+                <div class="space-y-2 text-center">
+                  <h1 class="text-3xl font-bold">Información del Alumno</h1>
+                  <div id="my-qr-reader"></div>
+                  <p class="text-gray-500 dark:text-gray-400">
+                    Ingresa el codigo para regitrar asistencia del alumno
+                  </p>
+
+                 
+                </div>
+                
+                <input type="number" id="codigoe" name="codigo" placeholder="Código" min="10001" max="10500" required>
+                <button id="buscar" class="bg-blue-500 text-white hover:bg-blue-700 w-32">Buscar</button>
+                  
+                  <form  id="editarAlumnoform" action="./alumno/">
+                    
+                    {% csrf_token %}
+                    <input type="text" id="nombree" name="nombreCompleto" placeholder="Nombre Completo" required>
+                    <input type="text" id="cedulae" placeholder="Cedula" name="cedula" required>
+                    <input type="text" id="semestree" placeholder="Semestre" name="semestre" required>
+
+                    <h1>Entradas </h1>
+                    <label for="dia_uno">Día Uno:</label>
+                    <input type="datetime-local" id="dia_uno" name="dia_uno">
+                    <label for="dia_dos">Día Dos:</label>
+                    <input type="datetime-local" id="dia_dos" name="dia_dos">
+
+                    
+
+
+                    <label for="Asistencia_NUDO_Y_SUTURA" id="Asistencia_NUDO_Y_SUTURAlabel">Asistencia NUDO Y SUTURA:</label>
+                    <input type="datetime-local" id="Asistencia_NUDO_Y_SUTURA" name="Asistencia_NUDO_Y_SUTURA">
+                    <label for="Asistencia_HEMORRAGIA_Y_FRACTURA" id="Asistencia_HEMORRAGIA_Y_FRACTURAlabel">Asistencia HEMORRAGIA Y FRACTURA:</label>
+                    <input type="datetime-local" id="Asistencia_HEMORRAGIA_Y_FRACTURA" name="Asistencia_HEMORRAGIA_Y_FRACTURA">
+                    <label for="Asistencia_INTUBACION_OROTRAQUEAL"id="Asistencia_INTUBACION_OROTRAQUEALlabel">Asistencia INTUBACION OROTRAQUEAL:</label>
+                    <input type="datetime-local" id="Asistencia_INTUBACION_OROTRAQUEAL" name="Asistencia_INTUBACION_OROTRAQUEAL">
+
+
+                    <h1>Salidas </h1>
+
+                    <label for="salida_dia_uno">Salida Día Uno:</label>
+                    <input type="datetime-local" id="salida_dia_uno" name="salida_dia_uno">
+                    <label for="salida_dia_dos"> Salida Día Dos:</label>
+                    <input type="datetime-local" id="salida_dia_dos" name="salida_dia_dos">
+
+
+                    <label for="salida_NUDO_Y_SUTURA" id="salida_NUDO_Y_SUTURAlabel">salida NUDO Y SUTURA:</label>
+                    <input type="datetime-local" id="salida_NUDO_Y_SUTURA" name="salida_NUDO_Y_SUTURA">
+
+                    <label for="salida_HEMORRAGIA_Y_FRACTURA" id="salida_HEMORRAGIA_Y_FRACTURAlabel">salida HEMORRAGIA Y FRACTURA:</label>
+                    <input type="datetime-local" id="salida_HEMORRAGIA_Y_FRACTURA" name="salida_HEMORRAGIA_Y_FRACTURA">
+
+                    <label for="salida_INTUBACION_OROTRAQUEAL"id="salida_INTUBACION_OROTRAQUEALlabel">salida INTUBACION OROTRAQUEAL:</label>
+                    <input type="datetime-local" id="salida_INTUBACION_OROTRAQUEAL" name="salida_INTUBACION_OROTRAQUEAL">
+
+
+                    
+                <br>
+                <div class="flex justify-end">
+                  <input type="submit" class="bg-green-500 text-white hover:bg-green-700 w-32 mr-2" value="Enviar">
+
+                  <button type="button" id="closedit" class="bg-red-500 text-white hover:bg-red-700 w-32">Cerrar</button>
+              </div>
+              </form>
+            </div>
+        
+          </dialog>
+    </main>
+          
+          
+{% endblock %}
+
+{% comment %}EStom es el put <form action="./alumno/" method="POST">
+  {% csrf_token %}
+
+  <input type="text" id="nombre" name="nombreCompleto" placeholder="Nombre Completo" required>
+  <input type="number" id="semestre"placeholder="Cedula" name="cedula" required>
+
+<div class="input-group">
+ 
+  <input type="number" id="semestre"placeholder="Semestre" name="semestre" required>
+  
+  <input type="number" id="codigo" name="codigo" placeholder="Código" required>
+
+  
+</div>
+<!-- Aquí van los campos de texto con la clase input-group -->
+<div class="checkbox-group">
+  <label for="NUDO_Y_SUTURA">NUDO_Y_SUTURA:</label>
+  <input type="checkbox" id="NUDO_Y_SUTURA" name="NUDO_Y_SUTURA">
+  <label for="Asistencia_NUDO_Y_SUTURA">Fecha de Asistencia</label>
+  <input type="datetime-local" id="Asistencia_NUDO_Y_SUTURA" name="Asistencia_NUDO_Y_SUTURA">
+</div>
+<div class="checkbox-group">
+  <label for="HEMORRAGIA_Y_FRACTURA">HEMORRAGIA_Y_FRACTURA:</label>
+  <input type="checkbox" id="HEMORRAGIA_Y_FRACTURA" name="HEMORRAGIA_Y_FRACTURA">
+  <label for="Asistencia_HEMORRAGIA_Y_FRACTURA">Fecha de Asistencia</label>
+  <input type="datetime-local" id="Asistencia_HEMORRAGIA_Y_FRACTURA" name="Asistencia_HEMORRAGIA_Y_FRACTURA">
+</div>
+<div class="checkbox-group">
+  <label for="INTUBACION_OROTRAQUEAL">INTUBACION_OROTRAQUEAL:</label>
+  <input type="checkbox" id="INTUBACION_OROTRAQUEAL" name="INTUBACION_OROTRAQUEAL">
+  <label for="Asistencia_INTUBACION_OROTRAQUEAL">Fecha de Asistencia</label>
+  <input type="datetime-local" id="Asistencia_INTUBACION_OROTRAQUEAL" name="Asistencia_INTUBACION_OROTRAQUEAL">
+</div><br>
+<div class="flex justify-end">
+<input type="submit" class="bg-green-500 text-white hover:bg-green-700 w-32 mr-2" value="Enviar">
+<button id="close" class="bg-red-500 text-white hover:bg-red-700 w-32">Cerrar</button>
+</div>
+</form> {% endcomment %}
