@@ -1,7 +1,7 @@
 from django.db import models
 
 class Alumno(models.Model):
-    id = models.AutoField(primary_key=True)
+  
     cedula = models.CharField(max_length=20)
     nombreCompleto = models.CharField(max_length=200)
     semestre = models.CharField(max_length=20, null=True, blank=True)
