@@ -128,31 +128,30 @@ const csrftoken = getCookie('csrftoken');
 
 //Metodo DELETE de un alumno
 document.addEventListener('DOMContentLoaded', function() {
-  var deleteButtons = document.querySelectorAll('.deleteButton');
+  var deleteButtons = document.querySelectorAll('#deleteButton');  // Cambia '.deleteButton' a '#deleteButton'
   deleteButtons.forEach(function(button) {
     button.addEventListener('click', function() {
-      // Obtén el atributo data-cedula en lugar del id
-      var cedula = this.getAttribute('data-cedula');
-      console.log(cedula);
+      console.log('Button clicked');  // Verifica que el evento de clic se está ejecutando
+      var codigo = this.getAttribute('data-codigo');
+      console.log('Codigo:', codigo);  // Verifica que el código se está obteniendo correctamente
       let protocol = window.location.protocol;
-
-      // Obtener el dominio
       let domain = window.location.protocol + '//' + window.location.host;
-      let url = domain +  '/alumno/' +'?cedula=' + cedula;  // Añade la cédula a la URL
-      console.log(url);
+      let url = domain +  '/alumno/' +'?codigo=' + codigo;
+      console.log('URL:', url);  // Verifica que la URL se está construyendo correctamente
       var xhr = new XMLHttpRequest();
       xhr.open('DELETE', url, true);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      // Aquí es donde añades el token CSRF a la cabecera de la solicitud
       xhr.setRequestHeader("X-CSRFToken", csrftoken);
       xhr.onload = function() {
         if (xhr.status === 200) {
+          console.log('Request successful');  // Verifica que la solicitud se completó con éxito
           Swal.fire(
             'Deleted!',
             'Alumno eliminado correctamente',
             'success'
           )
         } else {
+          console.log('Request failed');  // Verifica que la solicitud falló
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -160,10 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         }
       };
-      xhr.send();  // No necesitas enviar ningún cuerpo con la solicitud
+      xhr.send();
     });
   });
 });
+
 
 
 // Primero, seleccionamos el formulario

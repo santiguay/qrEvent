@@ -171,7 +171,7 @@ class AlumnoView(View):
     def delete(self, request, *args, **kwargs):
         # Obtiene la cédula del alumno de los parámetros de la URL
         params = QueryDict(request.META['QUERY_STRING'])
-        codigo = params.get('cedula')
+        codigo = params.get('codigo')
         print(codigo)
         alumno = Alumno.objects.get(codigo=codigo)
         alumno.delete()
