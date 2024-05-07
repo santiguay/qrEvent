@@ -128,30 +128,36 @@ const csrftoken = getCookie('csrftoken');
 
 //Metodo DELETE de un alumno
 document.addEventListener('DOMContentLoaded', function() {
-  var deleteButtons = document.querySelectorAll('#deleteButton');  // Cambia '.deleteButton' a '#deleteButton'
-  deleteButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-      console.log('Button clicked');  // Verifica que el evento de clic se está ejecutando
-      var codigo = this.getAttribute('data-codigo');
-      console.log('Codigo:', codigo);  // Verifica que el código se está obteniendo correctamente
+  document.body.addEventListener('click', function(event) {
+    if (event.target.matches('.deleteButton')) {
+      var codigo = event.target.getAttribute('data-codigo');
       let protocol = window.location.protocol;
       let domain = window.location.protocol + '//' + window.location.host;
       let url = domain +  '/alumno/' +'?codigo=' + codigo;
-      console.log('URL:', url);  // Verifica que la URL se está construyendo correctamente
       var xhr = new XMLHttpRequest();
       xhr.open('DELETE', url, true);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+      // Muestra la alerta de SweetAlert
+      Swal.fire({
+        title: 'Borrando...',
+        text: 'Por favor espera',
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+          Swal.showLoading()
+        }
+      });
+
       xhr.onload = function() {
+        Swal.close();  // Cierra la alerta de SweetAlert
         if (xhr.status === 200) {
-          console.log('Request successful');  // Verifica que la solicitud se completó con éxito
           Swal.fire(
             'Deleted!',
             'Alumno eliminado correctamente',
             'success'
           )
         } else {
-          console.log('Request failed');  // Verifica que la solicitud falló
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -160,9 +166,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       };
       xhr.send();
-    });
+    }
   });
 });
+
 
 
 
