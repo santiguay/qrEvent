@@ -132,7 +132,7 @@ class AlumnoView(View):
 
         # Elimina el token CSRF de los datos
         data.pop('csrfmiddlewaretoken', None)
-        print(data)
+        
         
 
         
@@ -142,7 +142,7 @@ class AlumnoView(View):
         'salida_dia_dos']
 
         
-
+        print(data)
         for field in datetime_fields:
             if field in data and data[field] and isinstance(data[field], str):
                 try:
@@ -152,14 +152,21 @@ class AlumnoView(View):
             else:
                 # Si el campo de fecha y hora está vacío, lo eliminamos de los datos
                 data.pop(field, None)
+        for key, value in data.items():
+            if value == 'on':
+                data[key] = True
+            
+        print(data)
         # Verifica si el alumno existe
-        alumno = Alumno.objects.filter(cedula=data.get('cedula'))  # Cambia 'codigo' a 'cedula'
+        alumno = Alumno.objects.filter(codigo=data.get('codigo'))  # Cambia 'codigo' a 'cedula'
         if not alumno.exists():
+            print(data.get('codigo'))
+            print(alumno)
             return JsonResponse({'message': 'El alumno no existe'}, safe=False, status=403)
         print(alumno)
         # Prepara los datos para la actualización
         update_data = {key: data.get(key) for key in data}
-
+        print(update_data)
         # Si el alumno existe, actualiza el registro
         alumno.update(**update_data)
         return JsonResponse({'message': 'Alumno actualizado correctamente'}, safe=False)

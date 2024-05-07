@@ -25,6 +25,7 @@ Home
                   <th class="px-4 py-2">HEMORRAGIA Y FRACTURA</th>
                   <th class="px-4 py-2">INTUBACION OROTRAQUEAL</th>
                   <th class="px-4 py-2"></th>
+                  <th class="px-4 py-2"></th>
                 </tr>
             </thead>
             <tbody>
@@ -116,7 +117,21 @@ Home
                             </button>
                             
                         </td>
+
+                        <td class="border px-4 py-2">
+                          <button id="editButton" data-codigo="{{alumno.codigo}}" class="editButton inline-flex items-center justify-center whitespace-nowrap text-sm font-medium bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
+                              <path d="M12 20h9"></path>
+                              <path d="M16 4a2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 0-4z"></path>
+                              <line x1="16" y1="9" x2="12" y2="13"></line>
+                              <line x1="12" y1="12" x2="8" y2="16"></line>
+                            </svg>
+                            Editar
+                          </button>
+                        </td>
+                        
                         {% endif %}
+
 
                     </tr>
                 {% endfor %}
@@ -132,6 +147,7 @@ Home
                 <th class="px-4 py-2">NUDO Y SUTURA</th>
                 <th class="px-4 py-2">HEMORRAGIA Y FRACTURA</th>
                 <th class="px-4 py-2">INTUBACION OROTRAQUEAL</th>
+                <th class="px-4 py-2"></th>
                 <th class="px-4 py-2"></th>
 
               </tr>
@@ -223,6 +239,7 @@ Home
                     
                     {% csrf_token %}
                     <input type="text" id="nombree" name="nombreCompleto" placeholder="Nombre Completo" required>
+                    <input type="number" id="codigoee" name="codigo" placeholder="Código" min="10001" max="10500" required>
                     <input type="text" id="cedulae" placeholder="Cedula" name="cedula" required>
                     <input type="text" id="semestree" placeholder="Semestre" name="semestre" required>
 
@@ -272,6 +289,59 @@ Home
             </div>
         
           </dialog>
+
+
+
+
+
+
+          <dialog id="ModalCambiarCurso" class="modal">
+            <div class="mx-auto max-w-2xl space-y-8 py-12 md:py-16">
+              <div class="space-y-2 text-center">
+                <h1 class="text-3xl font-bold">Información del Alumno</h1>
+                <p class="text-gray-500 dark:text-gray-400">
+                  Por favor, complete los siguientes campos para registrar la información del alumno.
+                </p>
+              </div>
+              <form  id="CambiarCurso" method="post">
+                {% csrf_token %}
+         
+                <input type="text" id="nombreet" name="nombreCompleto" placeholder="Nombre Completo" required>
+  
+                <input type="text" id="cedulaet" placeholder="Cedula" name="cedula" required>
+          
+            <div class="input-group">
+               
+                <input type="text" id="semestreet"placeholder="Semestre" name="semestre" required>
+                
+                <input type="number" id="codigoet" name="codigo" placeholder="Código" min="10001" max="10500" required>
+  
+                
+            </div>
+            <!-- Aquí van los campos de texto con la clase input-group -->
+            <div class="checkbox-group">
+                <label for="NUDO_Y_SUTURA">NUDO Y SUTURA:</label>
+                <input type="checkbox" id="NUDO_Y_SUTURAet" name="NUDO_Y_SUTURA">
+                
+            </div>
+            <div class="checkbox-group">
+                <label for="HEMORRAGIA_Y_FRACTURA">HEMORRAGIA Y FRACTURA:</label>
+                <input type="checkbox" id="HEMORRAGIA_Y_FRACTURAet" name="HEMORRAGIA_Y_FRACTURA">
+              
+            </div>
+            <div class="checkbox-group">
+                <label for="INTUBACION_OROTRAQUEAL">INTUBACION OROTRAQUEAL:</label>
+                <input type="checkbox" id="INTUBACION_OROTRAQUEALet" name="INTUBACION_OROTRAQUEAL">
+               
+            </div><br>
+            <div class="flex justify-end">
+              <input type="submit" class="bg-green-500 text-white hover:bg-green-700 w-32 mr-2" value="Enviar">
+
+              <button id="closeEditDatatable" class="bg-red-500 text-white hover:bg-red-700 w-32">Cerrar</button>
+          </div>
+        </form>
+            </div>
+            </dialog>
     </main>
           
           

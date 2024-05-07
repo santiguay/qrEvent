@@ -98,13 +98,13 @@ const csrftoken = getCookie('csrftoken');
 
 // Esto hace que se muestre el modal de editar
   document.addEventListener('DOMContentLoaded', function() {
-    var editButtons = document.querySelectorAll('.editButton');
+    let editButtons = document.querySelectorAll('.editButton');
     editButtons.forEach(function(button) {
       button.addEventListener('click', function() {
-        var nombre = this.getAttribute('data-nombre');
-        var apellido = this.getAttribute('data-apellido');
-        var cedula = this.getAttribute('data-cedula');
-        var semestre = this.getAttribute('data-semestre');
+        let nombre = this.getAttribute('data-nombre');
+        let apellido = this.getAttribute('data-apellido');
+        let cedula = this.getAttribute('data-cedula');
+        let semestre = this.getAttribute('data-semestre');
         
         document.getElementById('nombreCompleto-' + cedula).value = nombre;
         document.getElementById('apellido-' + cedula).value = apellido;
@@ -249,6 +249,7 @@ document.getElementById("buscar").addEventListener("click", function(){
       .then(data => {
         console.log(data);
         document.getElementById("nombree").value = data.nombreCompleto;
+        document.getElementById("codigoee").value = data.codigo;
         document.getElementById("cedulae").value = data.cedula;
         document.getElementById("semestree").value = data.semestre;
         
@@ -359,4 +360,95 @@ formPut.addEventListener('submit', function(event) {
   });
 });
 
-// METODO DELETE ALUMNOS
+// Boton editar en la datatable
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.addEventListener('click', function(event) {
+    if (event.target.matches('.editButton')) {
+      var codigo = event.target.getAttribute('data-codigo');
+      let protocol = window.location.protocol;
+      let domain = window.location.protocol + '//' + window.location.host;
+      let url = domain +  '/alumno/' +'?codigo=' + codigo;
+      console.log(codigo);
+      // Realiza la solicitud GET
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          // Llena el modal con los datos del alumno
+          document.getElementById('nombreet').value = data.nombreCompleto;
+          document.getElementById('cedulaet').value = data.cedula;
+          document.getElementById('semestreet').value = data.semestre;
+          document.getElementById('codigoet').value = data.codigo;
+
+          // Marca las casillas de verificación si los valores booleanos son verdaderos
+          document.getElementById('NUDO_Y_SUTURAet').checked = data.NUDO_Y_SUTURA;
+          document.getElementById('HEMORRAGIA_Y_FRACTURAet').checked = data.HEMORRAGIA_Y_FRACTURA;
+          document.getElementById('INTUBACION_OROTRAQUEALet').checked = data.INTUBACION_OROTRAQUEAL;
+
+          // Muestra el modal
+          document.getElementById('ModalCambiarCurso').showModal();
+        });
+    }
+  });
+
+  // Cierra el modal cuando se hace clic en el botón de cierre
+  document.getElementById('closeEditDatatable').addEventListener('click', function() {
+    document.getElementById('ModalCambiarCurso').close();
+  });
+});
+
+
+// Combiar cursos 
+document.getElementById('CambiarCurso').addEventListener('submit', function(event) {
+  // Previene el comportamiento por defecto del formulario
+  event.preventDefault();
+
+  // Crea un objeto FormData a partir del formulario
+  let formData = new FormData(this);
+
+  
+  // Muestra la alerta de "Actualizando..."
+  document.getElementById('ModalCambiarCurso').close();
+  Swal.fire({
+    title: 'Actualizando...',
+    allowOutsideClick: false,
+    onBeforeOpen: () => {
+      Swal.showLoading();
+    }
+  });
+  
+
+  // Envía la solicitud PUT
+  fetch('/alumno/', {
+    method: 'PUT',
+    headers: {
+      // Asegúrate de incluir el token CSRF en los headers
+      'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+    },
+    body: new URLSearchParams(formData)  // Envía los datos como FormData
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error en la actualización');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Cierra la alerta de "Actualizando..."
+    Swal.close();
+
+    // Muestra una alerta de éxito
+    Swal.fire('¡Éxito!', 'El alumno ha sido actualizado.', 'success');
+  })
+  .catch((error) => {
+    // Cierra la alerta de "Actualizando..."
+    Swal.close();
+
+    // Muestra una alerta de error
+    Swal.fire('¡Error!', error.message, 'error');
+  });
+});
+
+
+
+
