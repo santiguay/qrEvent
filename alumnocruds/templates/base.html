@@ -33,7 +33,7 @@
    <!-- Sweetalert -->
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <!-- html5-qrcode -->
-   <script src="https://unpkg.com/html5-qrcode"></script>
+   {% comment %} <script src="https://unpkg.com/html5-qrcode"></script> {% endcomment %}
     <!-- JQUERY -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -60,7 +60,25 @@
 
    </body>
    
-   <script src="{% static 'js/qrScanner.js' %}"></script>
+   <script type="module"> 
+      import QrScanner from '../static/js/qr-scanner-master/qr-scanner.min.js';
+      function onScanSuccess(decodedText) {
+         // Asegúrate de que el texto decodificado es un número antes de asignarlo al input
+         if (!isNaN(decodedText)) {
+             document.getElementById('codigoe').value = decodedText;
+             console.log(decodedText);
+         }
+       }
+       
+       const videoElement = document.getElementById('my-qr-reader');
+       const qrScanner = new QrScanner(videoElement, onScanSuccess);
+       
+       qrScanner.start().then(() => {
+         console.log('La cámara se inició con éxito');
+     }, (error) => {
+         console.error('No se pudo iniciar la cámara', error);
+     });
+   </script>
    <script src="{% static 'js/main.js' %}"></script>
    <script>
       function redirigir(url) {

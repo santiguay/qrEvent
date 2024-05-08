@@ -1,22 +1,15 @@
-// script.js file
-function domReady(fn) {
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-      setTimeout(fn, 1000);
-    } else {
-      document.addEventListener("DOMContentLoaded", fn);
-    }
+import QrScanner from '.qr-scanner-master/qr-scanner.min.js';
+function onScanSuccess(decodedText) {
+  // Asegúrate de que el texto decodificado es un número antes de asignarlo al input
+  if (!isNaN(decodedText)) {
+      document.getElementById('codigoe').value = decodedText;
+      console.log(decodedText);
   }
-  
-  domReady(function () {
-    // Si se encuentra el código QR
-    function onScanSuccess(decodeText, decodeResult) {
-      // Asegúrate de que el texto decodificado es un número antes de asignarlo al input
-      if (!isNaN(decodeText)) {
-        document.getElementById('codigoe').value = decodeText;
-        console.log(decodeText);
-      }
-    }
-  
-    let htmlscanner = new Html5QrcodeScanner("my-qr-reader", { fps: 10, qrbos: 250 });
-    htmlscanner.render(onScanSuccess);
+}
+
+const videoElement = document.getElementById('my-qr-reader');
+const qrScanner = new QrScanner(videoElement, onScanSuccess);
+
+qrScanner.start().catch((error) => {
+  console.error('No se pudo iniciar el escaneo', error);
 });
