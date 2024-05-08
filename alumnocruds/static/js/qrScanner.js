@@ -17,6 +17,14 @@ function domReady(fn) {
       }
     }
   
-    let htmlscanner = new Html5QrcodeScanner("my-qr-reader", { fps: 10, qrbos: 250 });
+    let htmlscanner = new Html5QrcodeScanner(
+      "my-qr-reader",
+      {
+          fps: 120,  // Aumenta este valor para mejorar la velocidad de lectura
+            // Ajusta este valor según tus necesidades
+          useBarCodeDetectorIfSupported: true  // Habilita esta opción si está disponible
+      },
+      false  // verbose = false
+  );
     htmlscanner.render(onScanSuccess);
 });
