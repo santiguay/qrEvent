@@ -89,7 +89,7 @@ def qrscanner(request):
 class AlumnoView(View):
     def get(self, request, *args, **kwargs):
         codigo = request.GET.get('codigo')
-        if id:
+        if codigo:
             alumno = Alumno.objects.filter(codigo=codigo).first()
             if alumno:
                 return JsonResponse(model_to_dict(alumno), safe=False)

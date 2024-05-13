@@ -12,8 +12,9 @@ function domReady(fn) {
     function onScanSuccess(decodeText, decodeResult) {
       // Asegúrate de que el texto decodificado es un número antes de asignarlo al input
       if (!isNaN(decodeText)) {
-        document.getElementById('codigoe').value = decodeText;
         console.log(decodeText);
+        document.getElementById('codigoe').value = decodeText;
+        
       }
     }
   
